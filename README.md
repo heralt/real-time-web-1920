@@ -37,6 +37,11 @@ Goal: Handle data sharing and multi-user support
 
 > If you're seeing this message on a forked repo, it means one of our students hasn't changed the description yet 😈
 
+### Party site 
+An app where people join a party and we all listen to the same music at the same time. Every person in that party can queue music to the 
+party playlist. 
+
+
 <!-- Add a link to your live demo in Github Pages 🌐-->
 
 <!-- ☝️ replace this description with a description of your own work -->
