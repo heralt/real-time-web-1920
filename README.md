@@ -37,10 +37,26 @@ Goal: Handle data sharing and multi-user support
 
 > If you're seeing this message on a forked repo, it means one of our students hasn't changed the description yet 😈
 
-### Party site 
+## Party app 
 An app where people join a party and we all listen to the same music at the same time. Every person in that party can queue music to the 
 party playlist. 
 
+People are able to join rooms and in these rooms all have one playlist. People can search for music and add it to the single
+playlist.
+### table of content
+- [Functionality](#Functionality)
+- [API](#API)
+
+#### Functionality
+-[ ] Rooms **socket.io**
+-[ ] Playlist(combined)
+-[ ] Search(individual)
+-[ ] Add songs(individual)
+-[ ] chat 
+
+#### API
+For this product I'm using the Spotify API. This api lets premium members create playlists, search for songs and add songs 
+to playlists. I will be using these functionalities to my product. 
 
 <!-- Add a link to your live demo in Github Pages 🌐-->
 
