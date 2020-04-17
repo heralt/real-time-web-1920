@@ -48,11 +48,11 @@ playlist.
 - [API](#API)
 
 #### Functionality
--[ ] Rooms **socket.io**
--[ ] Playlist(combined)
--[ ] Search(individual)
--[ ] Add songs(individual)
--[ ] chat 
+- [ ] Rooms **socket.io**
+- [ ] Playlist(combined)
+- [ ] Search(individual)
+- [ ] Add songs(individual)
+- [ ] chat 
 
 #### API
 For this product I'm using the Spotify API. This api lets premium members create playlists, search for songs and add songs 
