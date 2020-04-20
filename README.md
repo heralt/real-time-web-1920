@@ -58,6 +58,9 @@ playlist.
 For this product I'm using the Spotify API. This api lets premium members create playlists, search for songs and add songs 
 to playlists. I will be using these functionalities to my product. 
 
+#### Diagram
+![Image of wireframe](images/Spotify diagram.png)
+Hierin is te zien waar ik welke data uit haal en waar het uiteindelijk opgeslagen moet worden. 
 <!-- Add a link to your live demo in Github Pages 🌐-->
 
 <!-- ☝️ replace this description with a description of your own work -->
