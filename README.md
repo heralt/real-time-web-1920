@@ -59,7 +59,7 @@ For this product I'm using the Spotify API. This api lets premium members create
 to playlists. I will be using these functionalities to my product. 
 
 #### Diagram
-![Image of wireframe](images/Spotify diagram.png)
+![Image of wireframe](images/Spotify_diagram.png)
 Hierin is te zien waar ik welke data uit haal en waar het uiteindelijk opgeslagen moet worden. 
 <!-- Add a link to your live demo in Github Pages 🌐-->
 
