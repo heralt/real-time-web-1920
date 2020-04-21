@@ -39,7 +39,7 @@ Goal: Handle data sharing and multi-user support
 
 ## Party app 
 An app where people join a party and we all listen to the same music at the same time. Every person in that party can queue music to the 
-party playlist. 
+party playlist. And there is also a way to chat with each other.  
 
 People are able to join rooms and in these rooms all have one playlist. People can search for music and add it to the single
 playlist.
@@ -48,19 +48,20 @@ playlist.
 - [API](#API)
 
 #### Functionality
-- [ ] Rooms **socket.io**
-- [ ] Playlist(combined)
-- [ ] Search(individual)
-- [ ] Add songs(individual)
+- [ ] Central playlist (**on the server**)
+- [ ] Search for songs (**on the client**)
+- [ ] Add songs (**from client to server**)
+- [ ] Listen to songs (**Send from server to client**)
 - [ ] chat 
-
+##### nice to have 
+- [ ] Rooms **socket.io**
 #### API
-For this product I'm using the Spotify API. This api lets premium members create playlists, search for songs and add songs 
-to playlists. I will be using these functionalities to my product. 
+For this webapp I'm using the Spotify API. This api lets premium members create playlists, search for songs and add songs 
+to playlists. I will be using these functionalities for my product. 
 
 #### Diagram
 ![Image of wireframe](images/Spotify_diagram.png)
-Hierin is te zien waar ik welke data uit haal en waar het uiteindelijk opgeslagen moet worden. 
+This diagram shows the where what data lives and what data I will be using from the Spotify API.
 <!-- Add a link to your live demo in Github Pages 🌐-->
 
 <!-- ☝️ replace this description with a description of your own work -->
