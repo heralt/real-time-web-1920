@@ -47,13 +47,13 @@ playlist.
 - [Functionality](#Functionality)
 - [API](#API)
 
-#### Functionality
+### Functionality
 - [ ] Central playlist (**on the server**)
 - [ ] Search for songs (**on the client**)
 - [ ] Add songs (**from client to server**)
 - [ ] Listen to songs (**Send from server to client**)
 - [ ] chat 
-##### nice to have 
+### nice to have 
 - [ ] Rooms **socket.io**
 #### API
 For this webapp I'm using the Spotify API. This api lets premium members create playlists, search for songs and add songs 
