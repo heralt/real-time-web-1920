@@ -1,0 +1,32 @@
+{
+  "name": "real-time-web-1920",
+  "version": "1.0.0",
+  "description": "During this course you will learn how to build a **meaningful** real-time application. You will learn techniques to setup an open connection between the client and the server. This will enable you to send data in real-time both ways, at the same time.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heralt/real-time-web-1920.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heralt/real-time-web-1920/issues"
+  },
+  "homepage": "https://github.com/heralt/real-time-web-1920#readme",
+  "dependencies": {
+    "ejs": "^3.0.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.3",
+    "socket.io": "^2.3.0",
+    "spotify-web-api-node": "^4.0.0"
+  }
+}

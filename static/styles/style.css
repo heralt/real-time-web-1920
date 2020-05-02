@@ -1,0 +1,55 @@
+
+html, body {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 10px;
+    margin: 0;
+}
+
+main > div {
+    display: flex;
+    border: black solid 2px;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+}
+
+main {
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 100px);
+}
+
+#search-results {
+    grid-column: 1 / 2;
+    grid-row: 2 / 4;
+    display: flex;
+    align-items: flex-start;
+    overflow-x: hidden;
+}
+
+#results {
+    margin: 5px 0 5px 0;
+    padding: 0;
+}
+
+#results > div{
+    display: flex;
+    margin-left: 5px;
+    font-size: x-large;
+    background-color: cadetblue;
+}
+
+#results > div > img {
+    margin: 1%;
+}
+
+.comments {
+    grid-row: 4 / 6;
+}
+
+#songs {
+    grid-row: 1 / 6;
+    position: relative;
+}
