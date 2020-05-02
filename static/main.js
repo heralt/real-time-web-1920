@@ -131,12 +131,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             });
         }
 
+        socket.emit('connected');
+
         socket.on('news', (data) => {
             console.log(data.hello);
             socket.emit('other event', {my: 'data'});
         });
-
-        socket.emit('connected');
 
         /**
          * gives latest connected person all current songs

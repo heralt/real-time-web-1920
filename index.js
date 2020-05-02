@@ -3,11 +3,6 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const fetch = require('node-fetch');
-/*const session = require('express-session');
-const SpotifyStrategy = require('passport-spotify').Strategy;
-const passport = require('passport');*/
-
-/*require('dotenv').config();*/
 
 app.set('view engine', 'ejs');
 app.use(express.static('static'));
@@ -41,7 +36,7 @@ io.on('connection', (socket) => {
         }).then(response => {
             return response.json();
         }).then(result => {
-            socket.emit('add song',{
+            io.sockets.emit('add song',{
                 song: result,
                 playlist: PLAYLIST_ID
             });
