@@ -36,7 +36,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                     console.error(e);
                 });
             });
-            player.disconnect();
             player.connect();
         }
 
