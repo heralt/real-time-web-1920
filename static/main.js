@@ -3,7 +3,7 @@ import {getHashParams} from './assets/getAccess.js';
 window.onSpotifyWebPlaybackSDKReady = () => {
     $(function () {
         let songAdded = false;
-        const socket = io.connect('http://localhost:3000/#');
+        const socket = io.connect('https://chat-spotify.herokuapp.com/');
         const ACCESS_TOKEN = getHashParams().access_token;
         let playlist = '';
 
