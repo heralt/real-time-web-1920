@@ -2,8 +2,8 @@ import {getHashParams} from './assets/getAccess.js';
 
 window.onSpotifyWebPlaybackSDKReady = () => {
     $(function () {
-        let songAdded = false;
-        const socket = io.connect('https://chat-spotify.herokuapp.com/');
+        const socket = io.connect('http://localhost:3000/#');
+        //const socket = io.connect('https://chat-spotify.herokuapp.com/#');
         const ACCESS_TOKEN = getHashParams().access_token;
         let playlist = '';
 
@@ -12,48 +12,43 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             name: 'Web Playback',
             getOAuthToken: callback => {
                 callback(token);
-            }
+            },
+            volume: 0.1
         });
 
-        function playSong(uri){
-            let song = '';
-            player.addListener('ready', ({device_id}) => {
-                console.log('here', uri);
-                fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
-                    method: "PUT",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + ACCESS_TOKEN
-                    },
-                    body: JSON.stringify({uris:[uri]}),
-                })
-                    .then(response => {
-                        return response.json();
-                    })
-                    .then(result => {
-                        console.log(result);
-                    }).catch(e => {
-                    console.error(e);
+        function playURI(uri){
+
+            // Called when connected to the player created beforehand successfully
+            player.addListener('ready', ({ device_id }) => {
+                console.log('Ready with Device ID', device_id);
+
+                const play = ({
+                                  spotify_uri,
+                                  playerInstance: {
+                                      _options: {
+                                          getOAuthToken,
+                                          id
+                                      }
+                                  }
+                              }) => {
+                    getOAuthToken(access_token => {
+                        fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
+                            method: 'PUT',
+                            body: JSON.stringify({ uris: [spotify_uri] }),
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${access_token}`
+                            },
+                        });
+                    });
+                };
+
+                play({
+                    playerInstance: player,
+                    spotify_uri: uri,
                 });
             });
             player.connect();
-        }
-
-        function addSong(uri){
-            player.addListener('ready', ({device_id}) => {
-                console.log('song added');
-                fetch(`https://api.spotify.com/v1/me/player/queue?device_id=${device_id}&uri=${uri}`,{
-                    headers: {
-                        'Authorization': 'Bearer ' + ACCESS_TOKEN,
-                    }
-                }).then(response => {
-                    return response.json();
-                }).then(result => {
-                    console.log(result);
-                }).catch(e => {
-                    console.error('error ', e);
-                })
-            });
         }
 
         const searchSong = () => {
@@ -171,7 +166,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             let songData = [data.song];
             let result = filterFetch(songData);
             createDiv('songs', result);
-            playSong(songData[0].uri);
+            playURI(songData[0].uri);
         });
 
     });
