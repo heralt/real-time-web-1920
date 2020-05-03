@@ -11,7 +11,6 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-let playlist = [];
 const PLAYLIST_ID = '71LMuR914gr93PYJweS7lO';
 
 io.on('connection', (socket) => {
@@ -21,13 +20,13 @@ io.on('connection', (socket) => {
         console.log(data)
     });
 
-    socket.on('connected',()=>{
+    socket.on('connected',() => {
         socket.emit('playlistID',{
             playlistID: PLAYLIST_ID
         });
     });
 
-    socket.on('click song', (data) =>{
+    socket.on('click song', (data) => {
         let url = `https://api.spotify.com/v1/tracks/${data.songID}`;
         fetch(url,{
             headers: {
@@ -38,9 +37,15 @@ io.on('connection', (socket) => {
         }).then(result => {
             io.sockets.emit('add song',{
                 song: result,
-                playlist: PLAYLIST_ID
+                playlist: PLAYLIST_ID,
             });
         });
+    });
+
+    socket.on('song active', (data) => {
+        socket.emit('change state',{
+            state: data.state
+        })
     });
 
     socket.on('disconnect', () => {

@@ -7,17 +7,30 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         const ACCESS_TOKEN = getHashParams().access_token;
         let playlist = '';
 
-        const token = ACCESS_TOKEN;
+        let songActive = {
+            stateSong: false,
+            aListener: function(val) {},
+            set state(val) {
+                this.stateSong = val;
+                this.aListener(val);
+            },
+            get state() {
+                return this.stateSong;
+            },
+            registerListener: function(listener) {
+                this.aListener = listener;
+            }
+        };
+
         const player = new Spotify.Player({
             name: 'Web Playback',
             getOAuthToken: callback => {
-                callback(token);
+                callback(ACCESS_TOKEN);
             },
-            volume: 0.1
+            volume: 0.5
         });
 
         function playURI(uri){
-
             // Called when connected to the player created beforehand successfully
             player.addListener('ready', ({ device_id }) => {
                 console.log('Ready with Device ID', device_id);
@@ -48,7 +61,33 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                     spotify_uri: uri,
                 });
             });
-            player.connect();
+
+            player.on('playback_error', ({ message }) => {
+                console.error('Failed to perform playback', message);
+            });
+
+            player.connect().then(async ()=>{
+                songActive.state = true;
+                /*socket.emit('song active',{
+                    state: true
+                });*/
+            });
+        }
+
+        function queSong(uri){
+            fetch(`https://api.spotify.com/v1/me/player/queue?uri=${uri}`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${ACCESS_TOKEN}`
+                },
+            }).then(response => {
+                return response.json();
+            }).then(result => {
+                console.log('queued song ', result);
+            }).catch(e => {
+                console.error('error ',e);
+            })
         }
 
         const searchSong = () => {
@@ -105,18 +144,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             $(`#${section}`).html(value);
         }
 
-        function getUser() {
-            return fetch('https://api.spotify.com/v1/me', {
-                headers: {
-                    'Authorization': 'Bearer ' + ACCESS_TOKEN
-                }
-            }).then(response => {
-                return response.json();
-            }).then(result => {
-                return result;
-            });
-        }
-
         function getPlaylist(playlist) {
             return fetch(`https://api.spotify.com/v1/playlists/${playlist}`, {
                 headers: {
@@ -130,6 +157,36 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                 console.error(e);
             });
         }
+
+        /**
+         * checks if songs are finished
+         */
+        function checkState(){
+            player.addListener('player_state_changed', state => {
+                if(state.paused && state.position === 0 && state.restrictions.disallow_resuming_reasons &&
+                    state.restrictions.disallow_resuming_reasons[0] === "not_paused"){
+                    console.log("finished");
+                    console.log('current ', state.track_window.current_track);
+                    state.track_window.current_track = {};
+                    songActive.state = false;
+
+                    player.disconnect();
+                }
+            });
+        }
+
+        /**
+         * check state of current song, if active
+         */
+        songActive.registerListener(function(val) {
+            console.log("state " + val);
+            if(val === true){
+                setInterval(checkState,3000);
+            }
+            socket.broadcast.emit('song active',{
+                state: val
+            });
+        });
 
         socket.emit('connected');
 
@@ -156,8 +213,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                 $(`#${song.id}`).click(() => {
                     socket.emit('click song', {
                         access: ACCESS_TOKEN,
-                        songID: song.id
-                    })
+                        songID: song.id,
+                    });
                 });
             }
         }
@@ -166,7 +223,16 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             let songData = [data.song];
             let result = filterFetch(songData);
             createDiv('songs', result);
-            playURI(songData[0].uri);
+
+            if(songActive.state === false){
+                playURI(songData[0].uri);
+            } else {
+                queSong(songData[0].uri);
+            }
+        });
+
+        socket.on('change state', (data) => {
+            songActive.state = data.state;
         });
 
     });

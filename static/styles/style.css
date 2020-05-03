@@ -15,15 +15,25 @@ main > div {
 }
 
 main {
+    height: 100%;
     display: grid;
     grid-gap: 5px;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(5, 100px);
 }
 
+#search-bar{
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+#login-button{
+    grid-column: 2 / 3;
+}
+
 #search-results {
     grid-column: 1 / 2;
-    grid-row: 2 / 4;
+    grid-row: 2 / 5;
     display: flex;
     align-items: flex-start;
     overflow-x: hidden;
@@ -45,11 +55,11 @@ main {
     margin: 1%;
 }
 
-.comments {
-    grid-row: 4 / 6;
+#comments {
+    grid-row: 5 / 7;
 }
 
 #songs {
-    grid-row: 1 / 6;
+    grid-row: 2 / 7;
     position: relative;
 }
