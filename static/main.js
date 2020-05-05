@@ -17,8 +17,8 @@ let songActive = {
 
 window.onSpotifyWebPlaybackSDKReady = () => {
     $(function () {
-        // const socket = io.connect('http://localhost:3000/#');
-        const socket = io.connect('https://chat-spotify.herokuapp.com/#');
+        const socket = io.connect('http://localhost:3000/#');
+        // const socket = io.connect('https://chat-spotify.herokuapp.com/#');
         const ACCESS_TOKEN = getHashParams().access_token;
         let playlist = '';
 
@@ -160,11 +160,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                     clear("songs");
                     image = state.track_window.current_track.album.images[2].url;
                     songImage(state.track_window.current_track.album.images[2].url);
+                    socket.emit('queued played');
                 }
                 console.log(state);
                 if(state.paused && state.position === 0 && state.restrictions.disallow_resuming_reasons[0] === "not_paused"
                     && state.track_window.next_tracks.length === 0){
-                    console.log('false');
+                    clear("songs");
                     songActive.state = false;
                 }
             });
@@ -209,6 +210,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                             access: ACCESS_TOKEN,
                             songID: song.id,
                         });
+                        socket.emit('queued songs');
                     }
                 });
             }
@@ -230,6 +232,11 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             let songData = [data.song];
             let result = filterFetch(songData);
             queSong(songData[0].uri);
+        });
+
+        socket.on('queued songs', (data) => {
+            console.log('here', data.queued);
+            $("#queued").html(`<h1 style="color: black; position: fixed; top: 4.45cm; right: 1.17cm; font-size: 15px;">Queued songs: ${data.queued}</h1>`);
         });
 
         socket.on('change state',(data) => {

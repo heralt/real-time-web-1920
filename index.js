@@ -49,8 +49,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('click song que', (data) => {
-        queuedSongs += 1;
-
         let url = `https://api.spotify.com/v1/tracks/${data.songID}`;
         fetch(url,{
             headers: {
@@ -63,6 +61,20 @@ io.on('connection', (socket) => {
                 song: result,
                 playlist: PLAYLIST_ID
             });
+        });
+    });
+
+    socket.on('queued songs',()=>{
+        queuedSongs +=1;
+       socket.emit('queued songs',{
+           queued: queuedSongs
+       });
+    });
+
+    socket.on('queued played',()=>{
+        queuedSongs -=1;
+        socket.emit('queued songs',{
+            queued: queuedSongs
         });
     });
 

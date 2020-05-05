@@ -107,6 +107,16 @@ main > div {
     box-shadow: 3px 3px 5px white;
 }
 
+#queued {
+    position: fixed;
+    margin: 0;
+    background-color: white;
+    width: 3cm;
+    height: 1cm;
+    border: white solid 1px;
+    right: 1cm;
+}
+
 #comments {
     grid-row: 5 / 7;
     display: grid;
