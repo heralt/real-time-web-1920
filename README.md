@@ -23,6 +23,19 @@ Link naar applicatie: [live link](https://chat-spotify.herokuapp.com/)
 ## API
 For this webapp I'm using the Spotify API. This api lets premium members create playlists, search for songs and add songs 
 to playlists. I will be using these functionalities for my product. 
+## API
+```bash
+#### Clone repository
+git clone https://github.com/heralt/real-time-web-1920.git
+
+cd real-time-web-1920
+
+#### Install project and dependencies
+npm install
+
+#### run project
+npm start
+```
 
 ## Diagram
 ![Image of wireframe](images/Spotify_diagram.png)
