@@ -56,7 +56,7 @@ io.on('connection', (socket) => {
         }).then(response => {
             return response.json();
         }).then(result => {
-            io.to(socket.id).emit('queue song',{
+            io.emit('queue song',{
                 song: result,
                 playlist: PLAYLIST_ID
             });
