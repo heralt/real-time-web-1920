@@ -11,8 +11,6 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-const PLAYLIST_ID = '71LMuR914gr93PYJweS7lO';
-
 let queuedSongs = 0;
 
 io.on('connection', (socket) => {
@@ -26,7 +24,7 @@ io.on('connection', (socket) => {
 
     socket.on('connected',() => {
         socket.emit('playlistID',{
-            playlistID: PLAYLIST_ID
+            playlistID: 'connected'
         });
     });
 

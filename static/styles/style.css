@@ -61,9 +61,17 @@ main > div {
     grid-column: 2 / 3;
 }
 
-#login-button > button {
-
+#button {
+    position: fixed;
+    border-radius: 25px;
+    background-color: green;
+    border: 0;
+    width: 3cm;
+    height: 1cm;
+    font-size: medium;
+    top: 2.2cm;
 }
+
 
 #search-results {
     grid-column: 1 / 2;
