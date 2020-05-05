@@ -4,27 +4,27 @@ During this course you will learn how to build a **meaningful** real-time applic
 
 # Party app 
 An app where people join a party and we all listen to the same music at the same time. Every person in that party can queue music to the 
-party playlist. And there is also a way to chat with each other.  
+party queue. And there is also a way to chat with each other.
 
 # Site live
 Link naar applicatie: [live link](https://chat-spotify.herokuapp.com/)
 
-### table of content
+## table of content
 - [Functionality](#Functionality)
 - [API](#API)
 
-### Functionality
+## Functionality
 - [x] Search for songs (**on the client**)
 - [x] Add songs (**from client to server**)
 - [x] Listen to songs (**Send from server to client**)
 - [x] chat 
-### nice to have 
+## nice to have 
 - [ ] Rooms **socket.io**
 #### API
 For this webapp I'm using the Spotify API. This api lets premium members create playlists, search for songs and add songs 
 to playlists. I will be using these functionalities for my product. 
 
-#### Diagram
+## Diagram
 ![Image of wireframe](images/Spotify_diagram.png)
 This diagram shows the where what data lives and what data I will be using from the Spotify API.
 <!-- Add a link to your live demo in Github Pages 🌐-->
