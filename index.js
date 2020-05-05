@@ -66,14 +66,14 @@ io.on('connection', (socket) => {
 
     socket.on('queued songs',()=>{
         queuedSongs +=1;
-       socket.emit('queued songs',{
+        io.sockets.emit('queued songs',{
            queued: queuedSongs
        });
     });
 
     socket.on('queued played',()=>{
         queuedSongs -=1;
-        socket.emit('queued songs',{
+        io.sockets.emit('queued songs',{
             queued: queuedSongs
         });
     });
