@@ -157,7 +157,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         function checkState(){
             player.addListener('player_state_changed', state => {
                 if(image !== state.track_window.current_track.album.images[2].url){
-                    songImage("");
+                    clear("songs");
                     image = state.track_window.current_track.album.images[2].url;
                     songImage(state.track_window.current_track.album.images[2].url);
                 }
