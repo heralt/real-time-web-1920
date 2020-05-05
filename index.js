@@ -20,8 +20,6 @@ io.on('connection', (socket) => {
     let {username} = socket;
     username = "Anonymous";
 
-    socket.emit('news', {hello: 'yo'});
-
     socket.on('other event', (data) => {
         console.log(data)
     });
@@ -49,6 +47,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('click song que', (data) => {
+        console.log('que', socket.id);
         let url = `https://api.spotify.com/v1/tracks/${data.songID}`;
         fetch(url,{
             headers: {
@@ -57,7 +56,7 @@ io.on('connection', (socket) => {
         }).then(response => {
             return response.json();
         }).then(result => {
-            io.sockets.emit('que song',{
+            io.to(socket.id).emit('queue song',{
                 song: result,
                 playlist: PLAYLIST_ID
             });

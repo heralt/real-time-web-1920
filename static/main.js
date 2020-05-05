@@ -17,8 +17,8 @@ let songActive = {
 
 window.onSpotifyWebPlaybackSDKReady = () => {
     $(function () {
-        // const socket = io.connect('http://localhost:3000/#');
-        const socket = io.connect('https://chat-spotify.herokuapp.com/#');
+        const socket = io.connect('http://localhost:3000/#');
+        // const socket = io.connect('https://chat-spotify.herokuapp.com/#');
         const ACCESS_TOKEN = getHashParams().access_token;
         let playlist = '';
 
@@ -72,7 +72,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             });
         }
 
-        function queSong(uri){
+        function queueSong(uri){
             console.log('que ', uri);
             fetch(`https://api.spotify.com/v1/me/player/queue?uri=${uri}`,{
                 method: 'POST',
@@ -147,7 +147,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         let image = '';
 
         function songImage(image){
-            console.log(image);
             $("#songs").append(`<img src="${image}">`);
         }
 
@@ -188,11 +187,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
         socket.emit('connected');
 
-        socket.on('news', (data) => {
-            console.log(data.hello);
-            socket.emit('other event', {my: 'data'});
-        });
-
         /**
          *
          * @param songs
@@ -228,10 +222,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             playURI(songData[0].uri);
         });
 
-        socket.on('que song', (data) => {
+        socket.on('queue song', (data) => {
+            console.log('hier');
             let songData = [data.song];
-            let result = filterFetch(songData);
-            queSong(songData[0].uri);
+            queueSong(songData[0].uri);
         });
 
         socket.on('queued songs', (data) => {
@@ -256,12 +250,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         });
 
         socket.on('new_message', (data) => {
-            console.log('ontvangen: ', data);
             chatroom.append('<p class="message">' + data.username + ': ' + data.message + '</p>')
         });
 
         send_username.click(function(){
-            console.log(username.val());
             socket.emit('change_username', {username: username.val()})
         });
 
