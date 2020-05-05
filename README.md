@@ -6,7 +6,7 @@ During this course you will learn how to build a **meaningful** real-time applic
 An app where people join a party and we all listen to the same music at the same time. Every person in that party can queue music to the 
 party queue. And there is also a way to chat with each other.
 
-# Site live
+## Site live
 ![Prototype image](images/prototype_image.png)
 Link naar applicatie: [live link](https://chat-spotify.herokuapp.com/)
 
@@ -24,7 +24,7 @@ Link naar applicatie: [live link](https://chat-spotify.herokuapp.com/)
 ## API
 For this webapp I'm using the Spotify API. This api lets premium members create playlists, search for songs and add songs 
 to playlists. I will be using these functionalities for my product. 
-## API
+## Install project
 ```bash
 #### Clone repository
 git clone https://github.com/heralt/real-time-web-1920.git
