@@ -61,6 +61,10 @@ main > div {
     grid-column: 2 / 3;
 }
 
+#login-button > button {
+
+}
+
 #search-results {
     grid-column: 1 / 2;
     grid-row: 2 / 5;

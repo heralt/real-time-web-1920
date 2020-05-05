@@ -47,7 +47,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('click song que', (data) => {
-        console.log('que', socket.id);
         let url = `https://api.spotify.com/v1/tracks/${data.songID}`;
         fetch(url,{
             headers: {
@@ -92,7 +91,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        console.log('someone left')
+        console.log(`Socket ${socket.id} has disconnected`);
     });
 });
 
