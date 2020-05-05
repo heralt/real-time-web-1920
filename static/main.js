@@ -215,6 +215,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
 
         socket.on('add song', (data) => {
+            console.log(data.song);
             if(data.song.error && data.song.error.message === "The access token expired"){
                 alert('Je access token is verlopen, log opnieuw in.');
             }
