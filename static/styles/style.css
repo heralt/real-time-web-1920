@@ -1,17 +1,10 @@
 
 html, body {
+    background-color: antiquewhite;
     box-sizing: border-box;
     height: 100%;
     padding: 10px;
     margin: 0;
-}
-
-main > div {
-    display: flex;
-    border: black solid 2px;
-    justify-content: center;
-    align-items: center;
-    font-size: 2em;
 }
 
 main {
@@ -20,6 +13,14 @@ main {
     grid-gap: 5px;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(5, 100px);
+}
+
+main > div {
+    display: flex;
+    border: black solid 2px;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
 }
 
 #search-bar{
@@ -62,4 +63,11 @@ main {
 #songs {
     grid-row: 2 / 7;
     position: relative;
+}
+
+#songs > div{
+    display: flex;
+    margin-left: 5px;
+    font-size: x-large;
+    background-color: antiquewhite;
 }

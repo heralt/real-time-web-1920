@@ -1,26 +1,26 @@
 import {getHashParams} from './assets/getAccess.js';
 
+let songActive = {
+    stateSong: false,
+    aListener: function(val) {},
+    set state(val) {
+        this.stateSong = val;
+        this.aListener(val);
+    },
+    get state() {
+        return this.stateSong;
+    },
+    registerListener: function(listener) {
+        this.aListener = listener;
+    }
+};
+
 window.onSpotifyWebPlaybackSDKReady = () => {
     $(function () {
-        // const socket = io.connect('http://localhost:3000/#');
-        const socket = io.connect('https://chat-spotify.herokuapp.com/#');
+        const socket = io.connect('http://localhost:3000/#');
+        // const socket = io.connect('https://chat-spotify.herokuapp.com/#');
         const ACCESS_TOKEN = getHashParams().access_token;
         let playlist = '';
-
-        let songActive = {
-            stateSong: false,
-            aListener: function(val) {},
-            set state(val) {
-                this.stateSong = val;
-                this.aListener(val);
-            },
-            get state() {
-                return this.stateSong;
-            },
-            registerListener: function(listener) {
-                this.aListener = listener;
-            }
-        };
 
         const player = new Spotify.Player({
             name: 'Web Playback',
@@ -31,6 +31,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         });
 
         function playURI(uri){
+            console.log('play ',uri);
             // Called when connected to the player created beforehand successfully
             player.addListener('ready', ({ device_id }) => {
                 console.log('Ready with Device ID', device_id);
@@ -66,15 +67,13 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                 console.error('Failed to perform playback', message);
             });
 
-            player.connect().then(async ()=>{
+            player.connect().then(()=>{
                 songActive.state = true;
-                /*socket.emit('song active',{
-                    state: true
-                });*/
             });
         }
 
         function queSong(uri){
+            console.log('que ', uri);
             fetch(`https://api.spotify.com/v1/me/player/queue?uri=${uri}`,{
                 method: 'POST',
                 headers: {
@@ -144,33 +143,16 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             $(`#${section}`).html(value);
         }
 
-        function getPlaylist(playlist) {
-            return fetch(`https://api.spotify.com/v1/playlists/${playlist}`, {
-                headers: {
-                    'Authorization': 'Bearer ' + ACCESS_TOKEN
-                }
-            }).then(response => {
-                return response.json();
-            }).then(result => {
-                return result;
-            }).catch(e => {
-                console.error(e);
-            });
-        }
-
         /**
          * checks if songs are finished
          */
         function checkState(){
             player.addListener('player_state_changed', state => {
-                if(state.paused && state.position === 0 && state.restrictions.disallow_resuming_reasons &&
-                    state.restrictions.disallow_resuming_reasons[0] === "not_paused"){
-                    console.log("finished");
-                    console.log('current ', state.track_window.current_track);
-                    state.track_window.current_track = {};
+                console.log(state);
+                if(state.paused && state.position === 0 && state.restrictions.disallow_resuming_reasons[0] === "not_paused"
+                    && state.track_window.next_tracks.length === 0){
+                    console.log('false');
                     songActive.state = false;
-
-                    player.disconnect();
                 }
             });
         }
@@ -182,10 +164,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             console.log("state " + val);
             if(val === true){
                 setInterval(checkState,3000);
+            }else{
+                player.disconnect().then(()=>{console.log('disconnected')});
             }
-            socket.broadcast.emit('song active',{
-                state: val
-            });
         });
 
         socket.emit('connected');
@@ -196,25 +177,23 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         });
 
         /**
-         * gives latest connected person all current songs
-         */
-        socket.on('playlistID', (data) => {
-            playlist = data.playlistID;
-            getPlaylist(playlist).then(result => { /*playSong(`${result.uri}`)*/
-            })
-        });
-
-        /**
          *
          * @param songs
          */
         function clickSong(songs) {
             for (let song of songs) {
                 $(`#${song.id}`).click(() => {
-                    socket.emit('click song', {
-                        access: ACCESS_TOKEN,
-                        songID: song.id,
-                    });
+                    if(songActive.state === false){
+                        socket.emit('click song', {
+                            access: ACCESS_TOKEN,
+                            songID: song.id,
+                        });
+                    } else {
+                        socket.emit('click song que', {
+                            access: ACCESS_TOKEN,
+                            songID: song.id,
+                        });
+                    }
                 });
             }
         }
@@ -223,16 +202,14 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             let songData = [data.song];
             let result = filterFetch(songData);
             createDiv('songs', result);
-
-            if(songActive.state === false){
-                playURI(songData[0].uri);
-            } else {
-                queSong(songData[0].uri);
-            }
+            playURI(songData[0].uri);
         });
 
-        socket.on('change state', (data) => {
-            songActive.state = data.state;
+        socket.on('que song', (data) => {
+            let songData = [data.song];
+            let result = filterFetch(songData);
+            createDiv('songs', result);
+            queSong(songData[0].uri);
         });
 
     });
