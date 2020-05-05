@@ -143,11 +143,24 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             $(`#${section}`).html(value);
         }
 
+
+        let image = '';
+
+        function songImage(image){
+            console.log(image);
+            $("#songs").append(`<img src="${image}">`);
+        }
+
         /**
          * checks if songs are finished
          */
         function checkState(){
             player.addListener('player_state_changed', state => {
+                if(image !== state.track_window.current_track.album.images[2].url){
+                    songImage("");
+                    image = state.track_window.current_track.album.images[2].url;
+                    songImage(state.track_window.current_track.album.images[2].url);
+                }
                 console.log(state);
                 if(state.paused && state.position === 0 && state.restrictions.disallow_resuming_reasons[0] === "not_paused"
                     && state.track_window.next_tracks.length === 0){
@@ -165,7 +178,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             if(val === true){
                 setInterval(checkState,3000);
             }else{
-                player.disconnect().then(()=>{console.log('disconnected')});
+                socket.broadcast.emit('no song active',{
+                    state: false
+                });
+                player.disconnect().then();
             }
         });
 
@@ -199,17 +215,46 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
 
         socket.on('add song', (data) => {
+            if(data.song.error && data.song.error.message === "The access token expired"){
+                alert('Je access token is verlopen, log opnieuw in.');
+            }
             let songData = [data.song];
-            let result = filterFetch(songData);
-            createDiv('songs', result);
+            //let result = filterFetch(songData);
+            image = songData[0].album.images[0].url;
+            songImage(songData[0].album.images[0].url);
             playURI(songData[0].uri);
         });
 
         socket.on('que song', (data) => {
             let songData = [data.song];
             let result = filterFetch(songData);
-            createDiv('songs', result);
             queSong(songData[0].uri);
+        });
+
+        socket.on('change state',(data) => {
+            songActive.state = data.state;
+        });
+
+        let message = $('#message');
+        let username = $('#username');
+        let send_message = $('#send_message');
+        let send_username = $('#send_username');
+        let chatroom = $('#messages');
+
+        send_message.click(function(){
+            socket.emit('new_message',{
+                message: message.val(),
+            })
+        });
+
+        socket.on('new_message', (data) => {
+            console.log('ontvangen: ', data);
+            chatroom.append('<p class="message">' + data.username + ': ' + data.message + '</p>')
+        });
+
+        send_username.click(function(){
+            console.log(username.val());
+            socket.emit('change_username', {username: username.val()})
         });
 
     });

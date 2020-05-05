@@ -1,10 +1,15 @@
-
-html, body {
-    background-color: antiquewhite;
+* {
     box-sizing: border-box;
+}
+html, body {
     height: 100%;
     padding: 10px;
     margin: 0;
+}
+
+html {
+    background-image: url('/images/party.jpg');
+    background-color: cadetblue;
 }
 
 main {
@@ -16,11 +21,18 @@ main {
 }
 
 main > div {
-    display: flex;
-    border: black solid 2px;
-    justify-content: center;
-    align-items: center;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
     font-size: 2em;
+}
+
+#login-button > * {
+    position: fixed;
+}
+
+#login-button > button,a {
+    top: 2.35cm;
 }
 
 #search-bar{
@@ -28,7 +40,24 @@ main > div {
     grid-row: 1 / 2;
 }
 
+#search-bar > * {
+    position: fixed;
+}
+
+#search-bar > input {
+    border-radius: 5px;
+    top: 2.71cm;
+    left: 0.53cm;
+    width: 5cm;
+}
+
+#search-bar > button {
+    top: 2.71cm;
+    left: 5.48cm;
+}
+
 #login-button{
+    align-items: center;
     grid-column: 2 / 3;
 }
 
@@ -37,7 +66,9 @@ main > div {
     grid-row: 2 / 5;
     display: flex;
     align-items: flex-start;
-    overflow-x: hidden;
+    overflow-x: auto;
+    background-color: black;
+    box-shadow: 2px 2px 5px black;
 }
 
 #results {
@@ -47,27 +78,101 @@ main > div {
 
 #results > div{
     display: flex;
-    margin-left: 5px;
+    margin: 2px;
     font-size: x-large;
     background-color: cadetblue;
+    width: 100%;
+    height: 85px;
 }
 
 #results > div > img {
     margin: 1%;
 }
 
-#comments {
-    grid-row: 5 / 7;
-}
-
 #songs {
     grid-row: 2 / 7;
     position: relative;
+    background-color: black;
+    box-shadow: 2px 2px 5px black;
+    padding: 1cm;
 }
 
-#songs > div{
-    display: flex;
+#songs > img{
+    /*display: flex;
     margin-left: 5px;
     font-size: x-large;
-    background-color: antiquewhite;
+    background-color: antiquewhite;*/
+    width: 500px;
+    height: 500px;
+    box-shadow: 3px 3px 5px white;
+}
+
+#comments {
+    grid-row: 5 / 7;
+    display: grid;
+    grid-template-rows: 0.6cm 5.4cm 0.4cm;
+}
+
+#naming_zone {
+    grid-row: 1;
+}
+
+#naming_zone > * {
+    position: fixed;
+}
+
+#naming_zone > input {
+    left: 0.55cm;
+    width: 5cm;
+}
+
+#naming_zone > button {
+    left: 5.55cm;
+}
+#input_zone {
+    grid-row: 3;
+}
+
+#input_zone > * {
+    position: fixed;
+    bottom: 0.54cm;
+}
+
+#input_zone > input {
+    margin-left: 0;
+    height: 1cm;
+    width: 17.7cm;
+}
+
+#input_zone > button {
+    margin-right: 0;
+    width: 2.05cm;
+    height: 1cm;
+    left: 18.21cm;
+}
+
+/*container voor berichten*/
+#messages {
+    grid-row: 2;
+    overflow-x: auto;
+    background-color: black;
+    box-shadow: 2px 2px 5px black;
+}
+
+/*individueel bericht*/
+.message {
+    margin: 0px;
+    width: 100%;
+    height: 40px;
+    font-size: 2vh;
+    font-family: 'Comfortaa', sans-serif;
+    padding: 1vh;
+}
+
+.message:nth-child(even) {
+    background-color: #81DAF5;
+}
+
+.message:nth-child(odd) {
+    background-color: #81BEF7;
 }

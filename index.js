@@ -13,7 +13,13 @@ app.get('/', (req, res) => {
 
 const PLAYLIST_ID = '71LMuR914gr93PYJweS7lO';
 
+let queuedSongs = 0;
+
 io.on('connection', (socket) => {
+
+    let {username} = socket;
+    username = "Anonymous";
+
     socket.emit('news', {hello: 'yo'});
 
     socket.on('other event', (data) => {
@@ -43,6 +49,8 @@ io.on('connection', (socket) => {
     });
 
     socket.on('click song que', (data) => {
+        queuedSongs += 1;
+
         let url = `https://api.spotify.com/v1/tracks/${data.songID}`;
         fetch(url,{
             headers: {
@@ -53,15 +61,23 @@ io.on('connection', (socket) => {
         }).then(result => {
             socket.emit('que song',{
                 song: result,
-                playlist: PLAYLIST_ID,
+                playlist: PLAYLIST_ID
             });
         });
     });
 
-    socket.on('song active', (data) => {
+    socket.on('song no active', (data) => {
         socket.emit('change state',{
             state: data.state
         })
+    });
+
+    socket.on('new_message', (data) => {
+        io.sockets.emit('new_message', {message: data.message, username: username});
+    });
+
+    socket.on('change_username', (data) => {
+        username = data.username;
     });
 
     socket.on('disconnect', () => {
