@@ -18,7 +18,7 @@ Link naar applicatie: [live link](https://chat-spotify.herokuapp.com/)
 - [x] Add songs (**from client to server**)
 - [x] Listen to songs (**Send from server to client**)
 - [x] chat 
-## nice to have 
+### nice to have 
 - [ ] Rooms **socket.io**
 #### API
 For this webapp I'm using the Spotify API. This api lets premium members create playlists, search for songs and add songs 
