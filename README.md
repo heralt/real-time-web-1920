@@ -7,7 +7,7 @@ An app where people join a party and we all listen to the same music at the same
 party queue. And there is also a way to chat with each other.
 
 # Site live
-![Prototype image](images/Spotify_diagram.png)
+![Prototype image](images/prototype_image.png)
 Link naar applicatie: [live link](https://chat-spotify.herokuapp.com/)
 
 ## table of content
