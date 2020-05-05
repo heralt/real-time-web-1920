@@ -17,8 +17,8 @@ let songActive = {
 
 window.onSpotifyWebPlaybackSDKReady = () => {
     $(function () {
-        // const socket = io.connect('http://localhost:3000/#');
-        const socket = io.connect('https://chat-spotify.herokuapp.com/#');
+        const socket = io.connect('http://localhost:3000/#');
+        // const socket = io.connect('https://chat-spotify.herokuapp.com/#');
         const ACCESS_TOKEN = getHashParams().access_token;
         let playlist = '';
 
@@ -31,9 +31,11 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         });
 
         function playURI(uri){
+            console.log('play ',uri);
             // Called when connected to the player created beforehand successfully
             player.addListener('ready', ({ device_id }) => {
                 console.log('Ready with Device ID', device_id);
+
                 const play = ({
                                   spotify_uri,
                                   playerInstance: {
@@ -71,6 +73,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
 
         function queueSong(uri){
+            console.log('que ', uri);
             fetch(`https://api.spotify.com/v1/me/player/queue?uri=${uri}`,{
                 method: 'POST',
                 headers: {
@@ -158,6 +161,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                     songImage(state.track_window.current_track.album.images[2].url);
                     socket.emit('queued played');
                 }
+                console.log(state);
                 if(state.paused && state.position === 0 && state.restrictions.disallow_resuming_reasons[0] === "not_paused"
                     && state.track_window.next_tracks.length === 0){
                     clear("songs");
@@ -170,6 +174,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
          * check state of current song, if active
          */
         songActive.registerListener(function(val) {
+            console.log("state " + val);
             if(val === true){
                 setInterval(checkState,3000);
             }else{
@@ -206,6 +211,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
 
         socket.on('add song', (data) => {
+            console.log(data.song);
             if(data.song.error && data.song.error.message === "The access token expired"){
                 alert('Je access token is verlopen, log opnieuw in.');
             }
@@ -217,11 +223,13 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         });
 
         socket.on('queue song', (data) => {
+            console.log('hier');
             let songData = [data.song];
             queueSong(songData[0].uri);
         });
 
         socket.on('queued songs', (data) => {
+            console.log('here', data.queued);
             $("#queued").html(`<h1 style="color: black; position: fixed; top: 4.45cm; right: 1.17cm; font-size: 15px;">Queued songs: ${data.queued}</h1>`);
         });
 

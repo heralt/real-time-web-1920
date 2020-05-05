@@ -11,6 +11,8 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+const PLAYLIST_ID = '71LMuR914gr93PYJweS7lO';
+
 let queuedSongs = 0;
 
 io.on('connection', (socket) => {
@@ -24,7 +26,7 @@ io.on('connection', (socket) => {
 
     socket.on('connected',() => {
         socket.emit('playlistID',{
-            playlistID: 'connected'
+            playlistID: PLAYLIST_ID
         });
     });
 
@@ -45,6 +47,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('click song que', (data) => {
+        console.log('que', socket.id);
         let url = `https://api.spotify.com/v1/tracks/${data.songID}`;
         fetch(url,{
             headers: {
@@ -89,7 +92,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        console.log(`Socket ${socket.id} has disconnected`);
+        console.log('someone left')
     });
 });
 
