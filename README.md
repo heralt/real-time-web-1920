@@ -13,14 +13,18 @@ Link naar applicatie: [live link](https://chat-spotify.herokuapp.com/)
 ## table of content
 - [Functionality](#Functionality)
 - [API](#API)
+- [Install project](#Install-project)
+- [Realtime events](#Realtime-events)
+- [Diagram](#Diagram)
+- [Diagram description](#diagram-description)
+- [Wishlist](#Wishlist)
 
 ## Functionality
 - [x] Search for songs (**on the client**)
 - [x] Add songs (**from client to server**)
 - [x] Listen to songs (**Send from server to client**)
 - [x] chat 
-### nice to have 
-- [ ] Rooms **socket.io**
+
 ## API
 For this webapp I'm using the Spotify API. This api lets premium members create playlists, search for songs and add songs 
 to playlists. I will be using these functionalities for my product. 
@@ -60,7 +64,21 @@ Message events
 
 ## Diagram
 ![Image of wireframe](images/Spotify_diagram.png)
-This diagram shows the where what data lives and what data I will be using from the Spotify API.
+
+### diagram description
+
+This diagram shows the where what data lives and what data I will be using from the Spotify API. A lot of fetches are done in the client. Searching for songs, playing songs and queueing songs are also done in the client. The reason for this is that the webplayback sdk needs a device code to know where to send the audio to. I wasn't able to make the server a a device and send the audio, so I did it in the client.
+
+I fetched the uri's that links to the audio in the server, because there I could immediately disperse it to the connected sockets for playing and queueing of the songs.
+
+I also do my autherization on the client. Usually you would use the server for this, because you don't want your secret spotify project codes in the client. But for this project I used the **implicit grant** Oauth flow which only uses your client id. You don't get a refresh token, which you would get with the Autherization code flow, but it gives me and access token and that is enough access for my project.
+
+### Wishlist
+- [ ] Time song is playing
+- [ ] stack of images of queued songs
+- [ ] song thats done being removed from queued songs image stack
+- [ ] Better design
+
 <!-- Add a link to your live demo in Github Pages 🌐-->
 
 <!-- ☝️ replace this description with a description of your own work -->
