@@ -69,7 +69,8 @@ This diagram shows the where what data lives and what data I will be using from 
 
 I fetched the uri's that links to the audio in the server, because there I could immediately disperse it to the connected sockets for playing and queueing of the songs.
 
-I also do my autherization on the client. Usually you would use the server for this, because you don't want your secret spotify project codes in the client. But for this project I used the implicit grant Oauth flow which doesn't use a secret key. You don't get a refresh token, which you would get with the Autherization code flow, but it gives me enough access to Spotify for my project. 
+I also do my autherization on the client. Usually you would use the server for this, because you don't want your secret spotify project codes in the client. But for this project I used the **implicit grant** Oauth flow which only uses your client id. You don't get a refresh token, which you would get with the Autherization code flow, but it gives me and access token and that is enough access for my project.
+
 ### Wishlist
 - [ ] Time song is playing
 - [ ] stack of images of queued songs
