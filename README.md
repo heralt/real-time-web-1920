@@ -44,11 +44,43 @@ npm start
 ## Realtime events
 Music events
 ### Client
-- `Search song - /search?q=Song name&type=track`: send name of artist or song to this end point, with access token in header, to receive Json with 20 songs of the artist or the ammount of songs it can find with that song name. 
+- `Search song - /search?q=Song name&type=track`: send name of artist or song to this end point, with access token in header, to receive Json with 20 songs of the artist or the ammount of songs it can find with that song name.
+```javascript
+fetch(`https://api.spotify.com/v1/search?q=${search}&type=track,album`, {
+                headers: {
+                    'Authorization': 'Bearer ' + ACCESS_TOKEN
+                }
+            })
+```
 - `Play song - /me/player/play`: send uri of song in the fetch body with access token in header to start playing song in browser when connected to webplayback sdk.
+```javascript
+fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
+                            method: 'PUT',
+                            body: JSON.stringify({ uris: [spotify_uri] }),
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${access_token}`
+                            },
+```
 - `Connect with webplayback sdk - player.connect()`: connects browser to webplayback sdk, music starts playing in browser. Browser is now active device.
+```javascript
+player.connect().then(()=>{
+                songActive.state = true;
+            });
+```
 - `Queue song: /me/player/queue?uri=Song`: puts song in queue. Will start playing song in active device using Spotify.
+```javascript
+fetch(`https://api.spotify.com/v1/me/player/queue?uri=${uri}`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${ACCESS_TOKEN}`
+                },
+```
 - `Disconnect from webplayback sdk - player.disconnect()`: if last song in queue is played, the app will disconnect from the webplayback sdk.
+```javascript
+player.disconnect()
+```
 ### Server
 - `Fetch uri of song for queue or playing of song: tracks/song id`: when a song is being queued or needs to be played, song data is fetched using the song id.  
 - `Keep track of ammount of queued songs`: when a song is queued value in server is updated and sent to connected sockets.
