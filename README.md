@@ -46,13 +46,17 @@ Music events
 - `Queue song: /me/player/queue?uri=Song`: puts song in queue. Will start playing song in active device using Spotify.
 - `Disconnect from webplayback sdk - player.disconnect()`: if last song in queue is played, the app will disconnect from the webplayback sdk.
 ### Server
-- `Fetch uri of song for queue or playing of song: tracks/song id`:when a song is being queued or needs to be played, song data is fetched using the song id.  
-- `Keep track of ammount of queued songs`:when a song is queued value in server is updated and sent to connected sockets.
+- `Fetch uri of song for queue or playing of song: tracks/song id`: when a song is being queued or needs to be played, song data is fetched using the song id.  
+- `Keep track of ammount of queued songs`: when a song is queued value in server is updated and sent to connected sockets.
 
 Message events
 ### Client
-
+- `Sending message to server`: send chat message to server.
+- `Receive message from server`: receives sent message from the server.
+- `Send nieuw name to server`: send chat name to server.
 ### Server
+- `Send message to connected sockets`: sends message to all connected sockets.
+- `change name of socket`: changes name of socket from anonymous to the name received from the socket.
 
 ## Diagram
 ![Image of wireframe](images/Spotify_diagram.png)
