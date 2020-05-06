@@ -82,8 +82,33 @@ fetch(`https://api.spotify.com/v1/me/player/queue?uri=${uri}`,{
 player.disconnect()
 ```
 ### Server
-- `Fetch uri of song for queue or playing of song: tracks/song id`: when a song is being queued or needs to be played, song data is fetched using the song id.  
+- `Fetch uri of song for queue or playing of song: tracks/song id`: when a song is being queued or needs to be played, song data is fetched using the song id. 
+```javascript
+let url = `https://api.spotify.com/v1/tracks/${data.songID}`;
+        fetch(url,{
+            headers: {
+                'Authorization': 'Bearer ' + data.access
+            }
+        })
+        ...
+        io.sockets.emit('add song',{
+                song: result,
+                playlist: PLAYLIST_ID,
+            });
+```
 - `Keep track of ammount of queued songs`: when a song is queued value in server is updated and sent to connected sockets.
+```javascript
+let url = `https://api.spotify.com/v1/tracks/${data.songID}`;
+        fetch(url,{
+            headers: {
+                'Authorization': 'Bearer ' + data.access
+            }
+        ...
+        io.emit('queue song',{
+                song: result,
+                playlist: PLAYLIST_ID
+            });
+```
 
 Message events
 ### Client
