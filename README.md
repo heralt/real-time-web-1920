@@ -22,8 +22,7 @@ Link naar applicatie: [live link](https://chat-spotify.herokuapp.com/)
 - [x] Add songs (**from client to server**)
 - [x] Listen to songs (**Send from server to client**)
 - [x] chat 
-### nice to have 
-- [ ] Rooms **socket.io**
+
 ## API
 For this webapp I'm using the Spotify API. This api lets premium members create playlists, search for songs and add songs 
 to playlists. I will be using these functionalities for my product. 
@@ -68,7 +67,13 @@ Message events
 
 This diagram shows the where what data lives and what data I will be using from the Spotify API. A lot of fetches are done in the client. Searching for songs, playing songs and queueing songs are also done in the client. The reason for this is that the webplayback sdk needs a device code to know where to send the audio to. I wasn't able to make the server a a device and send the audio, so I did it in the client.
 
-I fetched the uri that links to the audio in the server, because there I could immediately disperse it to the connected sockets for playing and queueing of the songs.
+I fetched the uri's that links to the audio in the server, because there I could immediately disperse it to the connected sockets for playing and queueing of the songs.
+
+### Wishlist
+- [ ] Time song is playing
+- [ ] stack of images of queued songs
+- [ ] song thats done being removed from queued songs image stack
+- [ ] Better design
 
 <!-- Add a link to your live demo in Github Pages 🌐-->
 
