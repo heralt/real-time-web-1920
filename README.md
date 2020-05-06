@@ -63,11 +63,13 @@ Message events
 
 ## Diagram
 ![Image of wireframe](images/Spotify_diagram.png)
-```
+
+### diagram description
+
 This diagram shows the where what data lives and what data I will be using from the Spotify API. A lot of fetches are done in the client. Searching for songs, playing songs and queueing songs are also done in the client. The reason for this is that the webplayback sdk needs a device code to know where to send the audio to. I wasn't able to make the server a a device and send the audio, so I did it in the client.
 
 I fetched the uri that links to the audio in the server, because there I could immediately disperse it to the connected sockets for playing and queueing of the songs.
-```
+
 <!-- Add a link to your live demo in Github Pages 🌐-->
 
 <!-- ☝️ replace this description with a description of your own work -->
