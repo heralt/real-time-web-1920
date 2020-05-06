@@ -111,12 +111,38 @@ let url = `https://api.spotify.com/v1/tracks/${data.songID}`;
 Message events
 ### Client
 - `Sending message to server`: send chat message to server.
+```javascript
+send_message.click(function(){
+            socket.emit('new_message',{
+                message: message.val(),
+            })
+        });
+```
 - `Receive message from server`: receives sent message from the server.
+```javascript
+socket.on('new_message', (data) => {
+            chatroom.append('<p class="message">' + data.username + ': ' + data.message + '</p>')
+        });
+```
 - `Send nieuw name to server`: send chat name to server.
+```javascript
+send_username.click(function(){
+            socket.emit('change_username', {username: username.val()})
+        });
+```
 ### Server
 - `Send message to connected sockets`: sends message to all connected sockets.
+```javascript
+socket.on('new_message', (data) => {
+        io.sockets.emit('new_message', {message: data.message, username: username});
+    });
+```
 - `change name of socket`: changes name of socket from anonymous to the name received from the socket.
-
+```javascript
+socket.on('change_username', (data) => {
+        username = data.username;
+    });
+```
 ## Diagram
 ![Image of wireframe](images/Spotify_diagram.png)
 
