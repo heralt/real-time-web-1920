@@ -78,6 +78,7 @@ I also do my autherization on the client. Usually you would use the server for t
 - [ ] stack of images of queued songs
 - [ ] song thats done being removed from queued songs image stack
 - [ ] Better design
+- [ ] Be able to join the app while music is playing and hear the current music
 
 <!-- Add a link to your live demo in Github Pages 🌐-->
 
