@@ -92,8 +92,7 @@ let url = `https://api.spotify.com/v1/tracks/${data.songID}`;
         })
         ...
         io.sockets.emit('add song',{
-                song: result,
-                playlist: PLAYLIST_ID,
+                song: result
             });
 ```
 - `Keep track of ammount of queued songs`: when a song is queued value in server is updated and sent to connected sockets.
@@ -105,8 +104,7 @@ let url = `https://api.spotify.com/v1/tracks/${data.songID}`;
             }
         ...
         io.emit('queue song',{
-                song: result,
-                playlist: PLAYLIST_ID
+                song: result
             });
 ```
 
