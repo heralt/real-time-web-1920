@@ -13,6 +13,9 @@ Link naar applicatie: [live link](https://chat-spotify.herokuapp.com/)
 ## table of content
 - [Functionality](#Functionality)
 - [API](#API)
+- [Install project](#Install-project)
+- [Realtime events](#Realtime-events)
+- [Diagram](#Diagram)
 
 ## Functionality
 - [x] Search for songs (**on the client**)
