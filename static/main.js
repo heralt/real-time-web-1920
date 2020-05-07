@@ -168,7 +168,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
                 console.log(state);
                 if(state.paused && state.position === 0 && state.restrictions.disallow_resuming_reasons[0] === "not_paused"
                     && state.track_window.next_tracks.length === 0){
-                    clear("songs");
+                    clear("image");
                     songActive.state = false;
                 }
             });
