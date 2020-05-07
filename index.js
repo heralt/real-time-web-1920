@@ -71,7 +71,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('queued played',()=>{
-        queuedSongs -=1;
+        if(queuedSongs > 0) {
+            queuedSongs -= 1;
+        } else {
+            queuedSongs = 0;
+        }
         io.sockets.emit('queued songs',{
             queued: queuedSongs
         });
