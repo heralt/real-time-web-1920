@@ -16,7 +16,6 @@ let songActive = {
 };
 
 window.onSpotifyWebPlaybackSDKReady = () => {
-    $(function () {
         // const socket = io.connect('http://localhost:3000/#');
         const socket = io.connect('https://chat-spotify.herokuapp.com/#');
         const ACCESS_TOKEN = getHashParams().access_token;
@@ -128,7 +127,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
 
         function clear(section) {
-            document.getElementById(section).innerHTML = "";
+            if(section === "image"){
+                let image = document.getElementById(section);
+                image.parentNode.removeChild(image);
+            } else {
+                document.getElementById(section).innerHTML = "";
+            }
         }
 
         //put search results in result box
@@ -147,7 +151,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         let image = '';
 
         function songImage(image){
-            $("#songs").append(`<img src="${image}">`);
+            $("#songs").append(`<img id="image" src="${image}">`);
         }
 
         /**
@@ -156,7 +160,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         function checkState(){
             player.addListener('player_state_changed', state => {
                 if(image !== state.track_window.current_track.album.images[2].url){
-                    clear("songs");
+                    clear("image");
                     image = state.track_window.current_track.album.images[2].url;
                     songImage(state.track_window.current_track.album.images[2].url);
                     socket.emit('queued played');
@@ -175,7 +179,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
          */
         songActive.registerListener(function(val) {
             console.log("state " + val);
-            if(val === true){
+            if(val){
                 setInterval(checkState,3000);
             }else{
                 socket.broadcast.emit('no song active',{
@@ -194,7 +198,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         function clickSong(songs) {
             for (let song of songs) {
                 $(`#${song.id}`).click(() => {
-                    if(songActive.state === false){
+                    if(!songActive.state){
                         socket.emit('click song', {
                             access: ACCESS_TOKEN,
                             songID: song.id,
@@ -257,5 +261,4 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             socket.emit('change_username', {username: username.val()})
         });
 
-    });
 };

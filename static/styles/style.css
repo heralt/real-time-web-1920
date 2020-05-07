@@ -9,7 +9,8 @@ html, body {
 
 html {
     background-image: url('/images/party.jpg');
-    background-color: cadetblue;
+    background: rgb(41,40,46);
+    background: linear-gradient(360deg, rgba(41,40,46,1) 26%, rgba(85,163,45,1) 76%);
 }
 
 main {
