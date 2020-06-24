@@ -1,0 +1,5 @@
+2020/06/24-23:07:38.918 53ec Recovering log #220
+2020/06/24-23:07:38.919 53ec Level-0 table #222: started
+2020/06/24-23:07:38.921 53ec Level-0 table #222: 1959 bytes OK
+2020/06/24-23:07:38.929 53ec Delete type=0 #220
+2020/06/24-23:07:38.930 53ec Delete type=3 #218
