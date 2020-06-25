@@ -3,10 +3,10 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const fetch = require('node-fetch');
-// const levelup = require('levelup');
-// const leveldown = require('leveldown');
+const levelup = require('levelup');
+const leveldown = require('leveldown');
 
-// const db = levelup(leveldown('./songDb'));
+const db = levelup(leveldown('./songDb'));
 
 app.set('view engine', 'ejs');
 app.use(express.static('static'));
