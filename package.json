@@ -6,6 +6,9 @@
   "directories": {
     "doc": "docs"
   },
+  "engines": {
+    "node": "12.14.1"
+  },
   "scripts": {
     "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
