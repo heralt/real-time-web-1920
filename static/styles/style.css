@@ -199,3 +199,7 @@ main > div {
 .message:nth-child(odd) {
     background-color: #81BEF7;
 }
+
+#rooms {
+    position: fixed;
+}

@@ -51,8 +51,14 @@ function getSongFromSpotify(songData) {
 io.on('connection', (socket) => {
 
     let {username} = socket;
-    console.log(username);
     username = "Anonymous";
+    let roomName = 'room 1';
+    socket.join(roomName);
+
+    socket.on('pick room', (room) => {
+        roomName = room.room;
+        socket.join(roomName);
+    });
 
     socket.on('other event', (data) => {
         console.log(data)
@@ -68,7 +74,7 @@ io.on('connection', (socket) => {
         let song = data.songID;
         getSongFromSpotify(data).then(result => {
             putSongInDb(song, JSON.stringify(result));
-            io.sockets.emit('add song', {
+            io.sockets.to(roomName).emit('add song', {
                 song: result,
                 playlist: PLAYLIST_ID,
             });
@@ -82,14 +88,14 @@ io.on('connection', (socket) => {
                 console.log('from api');
                 getSongFromSpotify(data).then(result => {
                     putSongInDb(song, JSON.stringify(result));
-                    io.emit('queue song', {
+                    io.to(roomName).emit('queue song', {
                         song: result,
                         playlist: PLAYLIST_ID,
                     });
                 });
             } else {
                 console.log('from db');
-                io.emit('queue song', {
+                io.to(roomName).emit('queue song', {
                     song: value,
                     playlist: PLAYLIST_ID,
                 });
@@ -116,13 +122,13 @@ io.on('connection', (socket) => {
     });
 
     socket.on('song no active', (data) => {
-        socket.emit('change state', {
+        socket.in(roomName).emit('change state', {
             state: data.state
         })
     });
 
     socket.on('new_message', (data) => {
-        io.sockets.emit('new_message', {message: data.message, username: username});
+        io.in(roomName).emit('new_message', {message: data.message, username: username});
     });
 
     socket.on('change_username', (data) => {
@@ -131,7 +137,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        console.log('someone left')
+
     });
 });
 

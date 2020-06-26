@@ -16,8 +16,8 @@ let songActive = {
 };
 
 window.onSpotifyWebPlaybackSDKReady = () => {
-        // const socket = io.connect('http://localhost:3000/#');
-        const socket = io.connect('https://chat-spotify.herokuapp.com/#');
+        const socket = io.connect('http://localhost:3000/#');
+        // const socket = io.connect('https://chat-spotify.herokuapp.com/#');
         const ACCESS_TOKEN = getHashParams().access_token;
         let playlist = '';
 
@@ -246,6 +246,11 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         let send_message = $('#send_message');
         let send_username = $('#send_username');
         let chatroom = $('#messages');
+        let room = $('#room-names');
+
+        room.on('change', () => {
+            socket.emit('pick room', {room: room.val()});
+        });
 
         send_message.click(function(){
             socket.emit('new_message',{
